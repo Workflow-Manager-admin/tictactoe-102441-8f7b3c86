@@ -1,7 +1,4 @@
 import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
-
-import { component$ } from "@builder.io/qwik";
 import TicTacToe from "../components/tictactoe/TicTacToe";
 
 // PUBLIC_INTERFACE
@@ -14,13 +11,3 @@ export default component$(() => {
     </div>
   );
 });
-
-export const head: DocumentHead = {
-  title: "Welcome to Qwik",
-  meta: [
-    {
-      name: "description",
-      content: "Qwik site description",
-    },
-  ],
-};
