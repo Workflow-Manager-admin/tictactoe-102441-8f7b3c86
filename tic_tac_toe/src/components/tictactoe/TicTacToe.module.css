@@ -1,0 +1,95 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 32px 0;
+}
+
+.status {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #2196f3; /* accent color */
+  letter-spacing: 0.02em;
+  text-align: center;
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  grid-template-rows: repeat(3, 60px);
+  gap: 12px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.cell {
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
+  font-weight: bold;
+  background: #ffffff; /* primary */
+  color: #000000; /* secondary */
+  border: 2px solid #2196f3; /* accent */
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.16s, box-shadow 0.16s;
+  outline: none;
+  user-select: none;
+  text-align: center;
+}
+.cell:disabled {
+  cursor: default;
+  background: #e3e3e3;
+  opacity: 0.66;
+  color: #8e8e8e;
+}
+
+/* Highlight X and O differently when game is over */
+.winX {
+  background: #2196f3 !important;
+  color: #fff !important;
+}
+.winO {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(3, 44px);
+    grid-template-rows: repeat(3, 44px);
+    padding: 10px;
+    gap: 7px;
+  }
+  .cell {
+    width: 44px;
+    height: 44px;
+    font-size: 1.3rem;
+  }
+}
+
+.resetBtn {
+  margin-top: 12px;
+  background: #2196f3;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  padding: 10px 26px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(33,150,243,0.08);
+  transition: background 0.18s, box-shadow 0.12s;
+}
+.resetBtn:hover, .resetBtn:focus {
+  background: #1670b9;
+}
+
