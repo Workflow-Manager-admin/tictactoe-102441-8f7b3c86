@@ -95,6 +95,7 @@ export default component$(() => {
         {board.value.map((cell, idx) => (
           <button
             key={idx}
+            data-idx={idx}
             class={[
               styles.cell,
               (winner.value === 1 && cell === 1) ? styles.winX : "",
@@ -107,7 +108,7 @@ export default component$(() => {
             }
             tabIndex={cell === 0 && !winner.value && !draw.value ? 0 : -1}
             disabled={cell !== 0 || !!winner.value || draw.value}
-            onClick$={() => handleCellClick(idx)}
+            onClick$={handleCellClick}
             type="button"
           >
             {cell === 1 ? "X" : cell === 2 ? "O" : ""}
