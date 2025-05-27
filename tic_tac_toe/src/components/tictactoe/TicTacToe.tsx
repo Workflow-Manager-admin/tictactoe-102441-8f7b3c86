@@ -119,7 +119,7 @@ export default component$(() => {
             }
             tabIndex={cell === 0 && !winner.value && !draw.value ? 0 : -1}
             disabled={cell !== 0 || !!winner.value || draw.value}
-            onClick$={handleCellClick}
+            onClick$={$((e: QwikMouseEvent<HTMLButtonElement>) => handleCellClick(e))}
             type="button"
           >
             {cell === 1 ? "X" : cell === 2 ? "O" : ""}
