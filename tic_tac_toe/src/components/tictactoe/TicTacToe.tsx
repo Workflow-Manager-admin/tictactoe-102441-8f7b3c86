@@ -1,4 +1,4 @@
-import { component$, useSignal, $ } from "@builder.io/qwik";
+import { component$, useSignal, $, QwikMouseEvent } from "@builder.io/qwik";
 import styles from "./TicTacToe.module.css";
 
 // PUBLIC_INTERFACE
@@ -20,22 +20,33 @@ export default component$(() => {
 
   // Winning patterns: indices of cells
   const WIN_PATTERNS = [
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    [0,3,6],
-    [1,4,7],
-    [2,5,8],
-    [0,4,8],
-    [2,4,6]
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
   ];
 
   // PUBLIC_INTERFACE
   /**
    * Handles a cell click. Sets value and checks for win/draw.
+   * Qwik-idiomatic: gets cell index from event's currentTarget.dataset.idx (string).
    */
-  const handleCellClick = $((idx: number) => {
-    if (winner.value !== null || draw.value || board.value[idx] !== 0) return;
+  const handleCellClick = $((ev: QwikMouseEvent<HTMLButtonElement>) => {
+    // Read "data-idx" from the button that was clicked
+    const idxStr = (ev.currentTarget as HTMLButtonElement)?.dataset?.idx ?? "";
+    const idx = parseInt(idxStr, 10);
+    if (
+      Number.isNaN(idx) ||
+      winner.value !== null ||
+      draw.value ||
+      board.value[idx] !== 0
+    )
+      return;
+    // Clone board so Qwik notices state change
     board.value = board.value.slice();
     board.value[idx] = xTurn.value ? 1 : 2;
     checkGameStatus();
@@ -71,7 +82,7 @@ export default component$(() => {
    * Resets the game to initial state.
    */
   const handleReset = $(() => {
-    board.value = [0,0,0,0,0,0,0,0,0];
+    board.value = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     xTurn.value = true;
     winner.value = null;
     draw.value = false;
@@ -79,10 +90,8 @@ export default component$(() => {
 
   // Helper for indication text
   function getStatusText() {
-    if (winner.value)
-      return `Player ${winner.value === 1 ? "X" : "O"} Wins!`;
-    if (draw.value)
-      return "Draw!";
+    if (winner.value) return `Player ${winner.value === 1 ? "X" : "O"} Wins!`;
+    if (draw.value) return "Draw!";
     return `Player ${xTurn.value ? "X" : "O"}'s Turn`;
   }
 
@@ -98,13 +107,15 @@ export default component$(() => {
             data-idx={idx}
             class={[
               styles.cell,
-              (winner.value === 1 && cell === 1) ? styles.winX : "",
-              (winner.value === 2 && cell === 2) ? styles.winO : "",
+              winner.value === 1 && cell === 1 ? styles.winX : "",
+              winner.value === 2 && cell === 2 ? styles.winO : "",
             ]}
             aria-label={
-              cell === 1 ? "X"
-              : cell === 2 ? "O"
-              : `Cell ${idx+1}, empty`
+              cell === 1
+                ? "X"
+                : cell === 2
+                ? "O"
+                : `Cell ${idx + 1}, empty`
             }
             tabIndex={cell === 0 && !winner.value && !draw.value ? 0 : -1}
             disabled={cell !== 0 || !!winner.value || draw.value}
