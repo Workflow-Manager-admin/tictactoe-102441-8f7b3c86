@@ -56,7 +56,8 @@ export default component$(() => {
         board.value[a] === board.value[b] &&
         board.value[a] === board.value[c]
       ) {
-        winner.value = board.value[a];
+        // Only assign if not 0 (type safety)
+        winner.value = board.value[a] === 1 ? 1 : board.value[a] === 2 ? 2 : null;
         return;
       }
     }

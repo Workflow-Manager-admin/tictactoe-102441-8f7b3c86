@@ -2,7 +2,6 @@ import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
 import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
 import TicTacToe from "../components/tictactoe/TicTacToe";
 
 // PUBLIC_INTERFACE
